@@ -80,7 +80,8 @@ def generate_snoise_img(width: int, height: int, pos: tuple = None):
         mat *= 128
     mat = mat.astype(np.uint8)
 
-    img = Image.fromarray(mat, mode='RGBA').resize((width, height))
+    img = Image.fromarray(
+        mat.transpose((1, 0, 2)), mode='RGBA').resize((width, height))
 
     # Put mouse cursor
     if pos is not None:
