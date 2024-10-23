@@ -121,7 +121,6 @@ class OnScreenPainter(object):
 
     def __init__(self):
         self.prepare_window()
-        pass
 
     def prepare_window(self):
         # Translucent image by its RGBA A channel
@@ -160,8 +159,7 @@ class OnScreenPainter(object):
         # pixmap = QPixmap.fromImage(ImageQt(img))
         # self.pixmap_container.setPixmap(pixmap)
         with self.acquire_lock():
-            pixmap = self.pixmap
-            if pixmap:
+            if pixmap := self.pixmap:
                 self.pixmap_container.setPixmap(pixmap)
         return
 

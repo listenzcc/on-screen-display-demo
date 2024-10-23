@@ -1,7 +1,10 @@
 {
     "cSpell.words": [
         "Frameless",
+        "loguru",
+        "omegaconf",
         "pixmap",
+        "pyautogui",
         "snoise"
     ]
 }

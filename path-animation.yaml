@@ -1,0 +1,47 @@
+screen:
+  id: 1 # int: 0, 1, ...
+
+window:
+  width: 800 # pixels
+  height: 600 # pixels
+
+# Define the path checkpoints
+checkpoints:
+  - seconds: 2 # seconds
+    x: 100 # pixels
+    y: 200 # pixels
+  - seconds: 10
+    x: 500
+    y: 400
+  - seconds: 15
+    x: 300
+    y: 500
+
+# How the checkpoints are linked IN ORDER
+interpolation:
+  type: linear # Now it only supports linear interpolation
+
+# Random blinking scatters
+scatter:
+  count: 100 # number of total scatters
+  affectRange: 100 # pixels
+  duration: 2 # seconds
+  minR: 3 # pixels
+  maxR: 10 # pixels
+  startAlpha: 200 # alpha channel of RGBA color
+  stopAlpha: 20 # alpha channel of RGBA color
+
+toggle:
+  pathCurve: true
+  checkpointNode: true
+  currentNode: true
+  windowFrame: true
+  progressBar: true
+
+unit:
+  em: 12 # size of one character
+
+color:
+  debug: "#3A8FB7"
+  text: "#3F2B36"
+  scatter: "#D0104C"
