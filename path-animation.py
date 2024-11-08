@@ -157,7 +157,7 @@ ds = DynamicScatter()
 ds.generate()
 
 
-def generate_img(passed: float):
+def generate_img(passed: float, key_pressed: str = ''):
     # Size and img
     width = CONFIG.window.width
     height = CONFIG.window.height
@@ -250,6 +250,10 @@ def generate_img(passed: float):
             overlay_drawer.ellipse(
                 (x-r, y-r, x+r, y+r), fill=MyColor.scatter+hex_alpha)
 
+    if CONFIG.toggle.keyPressedAnnotation:
+        drawer.text((width, height), key_pressed, font=MyFont.small_font,
+                    anchor='rb', fill=MyColor.text)
+
     # Composite the overlay image
     img = Image.composite(img, overlay_img, img)
 
@@ -268,6 +272,8 @@ class OnScreenPainter(object):
     height = CONFIG.window.height
 
     _rlock = RLock()
+    running = False
+    key_pressed = ''
 
     def __init__(self):
         self._prepare_window()
@@ -323,7 +329,8 @@ class OnScreenPainter(object):
         self.running = True
         tic = time.time()
         while self.running:
-            img = generate_img(passed=time.time()-tic)
+            img = generate_img(
+                passed=time.time()-tic, key_pressed=self.key_pressed)
             with self.acquire_lock():
                 self.pixmap = QPixmap.fromImage(ImageQt(img))
             time.sleep(0.01)
@@ -335,7 +342,7 @@ if __name__ == "__main__":
     osp = OnScreenPainter()
 
     osp.window.show()
-    osp.main_loop()
+    # osp.main_loop()
 
     def _on_timeout():
         osp.repaint()
@@ -353,9 +360,14 @@ if __name__ == "__main__":
             enum = Qt.Key(key)
             logger.debug(f'Key pressed: {key}, {enum.name}')
 
+            osp.key_pressed = str(enum.name)
+
             # If esc is pressed, quit the app
             if enum.name == 'Key_Escape':
                 osp.app.quit()
+
+            if enum.name == 'Key_S' and not osp.running:
+                osp.main_loop()
 
         except Exception as err:
             logger.error(f'Key pressed but I got an error: {err}')
