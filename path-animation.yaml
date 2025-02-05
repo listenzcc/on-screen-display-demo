@@ -34,10 +34,10 @@ scatter:
 toggle:
   pathCurve: true
   checkpointNode: true
-  currentNode: false
+  currentNode: true
   windowFrame: true
   progressBar: true
-  keyPressedAnnotation: false
+  keyPressedAnnotation: true
 
 unit:
   em: 12 # size of one character

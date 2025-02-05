@@ -18,6 +18,7 @@ Functions:
 
 # %% ---- 2024-10-23 ------------------------
 # Requirements and constants
+from PyQt6.QtCore import QThread, pyqtSignal
 import sys
 import time
 import noise
@@ -336,6 +337,18 @@ class OnScreenPainter(object):
             time.sleep(0.01)
 
 
+class AppThread(QThread):
+    finished = pyqtSignal()
+
+    def __init__(self, app):
+        super().__init__()
+        self.app = app
+
+    def run(self):
+        self.app.exec()
+        self.finished.emit()
+
+
 # %% ---- 2024-10-23 ------------------------
 # Play ground
 if __name__ == "__main__":
@@ -389,7 +402,12 @@ if __name__ == "__main__":
     timer.start()
 
     # Proper exit
-    sys.exit(osp.app.exec())
+    # sys.exit(osp.app.exec())
+
+    at = AppThread(osp.app)
+    at.start()
+
+    input('Press enter to quit')
 # %% ---- 2024-10-23 ------------------------
 # Pending
 

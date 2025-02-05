@@ -1,0 +1,6 @@
+screen:
+  id: 1 # int: 0, 1, ...
+
+window:
+  width: 800 # pixels
+  height: 600 # pixels
